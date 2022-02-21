@@ -7,32 +7,34 @@ import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { ResultComponent } from './result/result.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from "@angular/material/button";
-import {HttpClientModule} from "@angular/common/http";
-import { MatCardModule } from '@angular/material/card'
-import { FlexLayoutModule } from '@angular/flex-layout'
-import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SearchComponent,
-    FilterComponent,
-    ResultComponent
-  ],
-  imports: [
-    BrowserModule,
-    NoopAnimationsModule,
-    HttpClientModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    FlexLayoutModule,
-    MatTableModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        SearchComponent,
+        FilterComponent,
+        ResultComponent,
+    ],
+    imports: [
+        BrowserModule,
+        NoopAnimationsModule,
+        HttpClientModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        FlexLayoutModule,
+        MatTableModule,
+        MatPaginatorModule,
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
