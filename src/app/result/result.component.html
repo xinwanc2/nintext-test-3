@@ -35,12 +35,12 @@
 </table> -->
 
 <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource | async">
+    <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="airline">
             <th mat-header-cell *matHeaderCellDef>Airline</th>
             <td mat-cell *matCellDef="let element">
                 <img
-                    src="{{ itinerary.AirlineLogoAddress }}"
+                    src="{{ element.AirlineLogoAddress }}"
                     alt="Airline logo"
                 />{{ element.AirlineName }}
             </td>
@@ -55,13 +55,6 @@
             <th mat-header-cell *matHeaderCellDef>Inbound duration</th>
             <td mat-cell *matCellDef="let element">
                 {{ element.InboundFlightsDuration }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="outbound">
-            <th mat-header-cell *matHeaderCellDef>Outbound duration</th>
-            <td mat-cell *matCellDef="let element">
-                {{ element.OutboundFlightsDuration }}
             </td>
         </ng-container>
 

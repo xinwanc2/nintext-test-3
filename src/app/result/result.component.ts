@@ -15,23 +15,20 @@ import { FlightDataService, Itinerary } from '../flight-data.service';
     templateUrl: './result.component.html',
     styleUrls: ['./result.component.scss'],
 })
-export class ResultComponent implements OnInit, AfterViewInit {
+export class ResultComponent implements OnInit {
     displayedColumns = ['airline', 'stops', 'inbound', 'outbound', 'total'];
-    itineraries$: Observable<Itinerary[]> = of([]);
-    dataSource!: MatTableDataSource<Itinerary>;
+    dataSource = new MatTableDataSource<Itinerary>();
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(private dataService: FlightDataService) {}
 
     ngOnInit(): void {
-        this.itineraries$ = this.dataService.getItineraries();
-        this.dataSource = new MatTableDataSource<Itinerary>(
-            of(this.dataService.getItineraries())
-        );
-    }
-
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+        this.dataService.getItineraries().subscribe((res: Itinerary[]) => {
+            if (res) {
+                this.dataSource.data = res;
+                this.dataSource.paginator = this.paginator;
+            }
+        });
     }
 }
