@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Filter } from './filter/filter.model';
 
 export interface Itinerary {
     AirlineLogoAddress: string;
@@ -29,14 +30,14 @@ export class FlightDataService {
         return this.itineraries.asObservable();
     }
 
-    getAvailableAirlines(): Observable<string[]> {
+    getAvailableAirlines(): Observable<Filter[]> {
         return this.getItineraries().pipe(
             map((itineraries) => {
-                const airlines: string[] = [];
+                const airlines: Filter[] = [];
 
                 itineraries.forEach((i) => {
-                    if (!airlines.includes(i.AirlineName)) {
-                        airlines.push(i.AirlineName);
+                    if (!airlines.some((x) => x.name === i.AirlineName)) {
+                        airlines.push(new Filter(i.AirlineName));
                     }
                 });
 
