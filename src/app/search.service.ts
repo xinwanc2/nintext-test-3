@@ -8,9 +8,6 @@ import { BehaviorSubject } from 'rxjs';
     providedIn: 'root',
 })
 export class SearchService {
-    filterAirlines: BehaviorSubject<string[] | null> = new BehaviorSubject<
-        string[] | null
-    >(null);
     constructor(
         private http: HttpClient,
         private dataService: FlightDataService
@@ -18,9 +15,6 @@ export class SearchService {
 
     // TODO: filter result based on airline name and stops search criteria
     searchFlights(search: Search) {
-        if (!search.airlines || !search.airlines.length) {
-            return this.dataService.setItineraries([]);
-        }
         this.http
             .get<Itinerary[]>(
                 'https://nmflightapi.azurewebsites.net/api/flight',
@@ -32,6 +26,12 @@ export class SearchService {
                 }
             )
             .subscribe((itineraries: Itinerary[]) => {
+                itineraries = itineraries.filter(
+                    (x) =>
+                        (!search.airlineName ||
+                            search.airlineName === x.AirlineName) &&
+                        (!search.stops || search.stops === x.Stops)
+                );
                 this.dataService.setItineraries(itineraries);
             });
     }
