@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightDataService } from '../flight-data.service';
+import { FlightDataService, Itinerary } from '../flight-data.service';
 import { Observable, of } from 'rxjs';
 import { Filter } from './filter.model';
+import { map } from 'rxjs/operators';
+import { isTextInput } from '@angular/cdk/testing/testbed/fake-events/type-in-element';
 
 @Component({
     selector: 'app-filter',
@@ -9,14 +11,27 @@ import { Filter } from './filter.model';
     styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-    airlines$: Observable<Filter[]> = of([]);
+    airlines: Filter[] = [];
     constructor(private dataService: FlightDataService) {}
 
     ngOnInit(): void {
-        this.airlines$ = this.dataService.getAvailableAirlines();
+        this.dataService
+            .getAvailableAirlines()
+            .subscribe((airlines: Filter[]) => {
+                this.airlines = airlines;
+            });
     }
 
-    filterAirlines(name: string, value: boolean): void {
-        alert(value);
+    filterAirlines(): void {
+        const filteredAirlines = this.airlines.filter(x=> x.checked).map(x=> x.name);
+        this.dataService
+            .getItineraries()
+            .subscribe((itineraries: Itinerary[]) => {
+                itineraries = itineraries.filter((x) =>
+                filteredAirlines.includes(x.AirlineName)
+                );
+
+                this.dataService.setItineraries(itineraries);
+            });
     }
 }
