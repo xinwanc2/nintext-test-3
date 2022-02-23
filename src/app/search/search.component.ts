@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core'
-import { SearchService } from '../search.service'
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search',
@@ -7,11 +8,18 @@ import { SearchService } from '../search.service'
     styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-    constructor(private searchService: SearchService) {}
+    searchForm: FormGroup;
+    submit = false;
+    constructor(private searchService: SearchService, private fb: FormBuilder) {
+        this.searchForm = this.fb.group({
+            airlineName: [''],
+            stops: [''],
+        });
+    }
 
     ngOnInit(): void {}
 
     search() {
-        this.searchService.searchFlights();
+        this.searchService.searchFlights(this.searchForm.value);
     }
 }
