@@ -16,6 +16,9 @@ export interface Itinerary {
     providedIn: 'root',
 })
 export class FlightDataService {
+    filteredAirlines: BehaviorSubject<string[] | null> = new BehaviorSubject<
+        string[] | null
+    >(null);
     private itineraries: BehaviorSubject<Itinerary[]> = new BehaviorSubject<
         Itinerary[]
     >([]);

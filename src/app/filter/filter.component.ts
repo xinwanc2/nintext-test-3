@@ -22,16 +22,12 @@ export class FilterComponent implements OnInit {
             });
     }
 
-    filterAirlines(): void {
-        const filteredAirlines = this.airlines.filter(x=> x.checked).map(x=> x.name);
-        this.dataService
-            .getItineraries()
-            .subscribe((itineraries: Itinerary[]) => {
-                itineraries = itineraries.filter((x) =>
-                filteredAirlines.includes(x.AirlineName)
-                );
+    filterAirlines(airline: Filter, event: any): void {
+        airline.checked = event.target.checked;
+        const filteredAirlines = this.airlines
+            .filter((x) => x.checked)
+            .map((x) => x.name);
 
-                this.dataService.setItineraries(itineraries);
-            });
+        this.dataService.filteredAirlines.next(filteredAirlines);
     }
 }

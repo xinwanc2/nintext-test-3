@@ -8,7 +8,7 @@
             type="checkbox"
             id="{{ airline.name }}"
             [checked]="airline.checked"
-            (change)="filterAirlines()"
+            (change)="filterAirlines(airline, $event)"
         />
         <label for="{{ airline.name }}">{{ airline.name }}</label>
     </li>
